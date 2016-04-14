@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0",user-scalable=no name="viewport">
+<link rel="stylesheet" href="bootstrap.min.css">
+<link rel="stylesheet" href="forecast.css">
+<link rel="stylesheet" href="http://openlayers.org/en/v3.10.1/css/ol.css" type="text/css">
+<script src="//code.jquery.com/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="jquery.validate.min.js"></script>
+<script type="text/javascript" src="bootstrap.min.js"></script>
+<script type="text/javascript" src="validate.js"></script>
+<script src="http://momentjs.com/downloads/moment.min.js" type="text/javascript"></script>
+<script src="http://momentjs.com/downloads/moment-timezone-with-data.min.js" type="text/javascript"></script>
+<script src="http://momentjs.com/downloads/moment-timezone.min.js" type="text/javascript"></script>
+<script src="http://openlayers.org/api/OpenLayers.js"></script>
+
+
+</head>
+<body>
+<h1 style="text-align: center; color: black;">Forecast Search</h1>
+<div class="container" style="margin-top:3%;">
+<form class="navbar-form" id="searchForm" name="searchForm" style="background-color: rgba(112, 112, 112, 0.4); margin: 0px 0px; padding-top:10px; padding-bottom:10px;" action="" method="post">
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-2">
+  <div class="form-group">
+    <label for="streetAddr" class="labels">Street Address:<span style="color: red;">*</span></label><br>
+    <input type="text" class="form-control" style="padding: 0px 0px;" placeholder="Enter street address" id="streetAddr" name="streetAddr">
+</div>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-2">
+  <div class="form-group">
+    <label for="city" class="labels">City:<span style="color: red;">*</span></label><br>
+<input type="text" class="form-control" style="padding: 0px 0px;" placeholder="Enter the city name" name="city" id="city">
+  </div>
+    </div>
+<div class="col-xs-12 col-sm-12 col-md-2">
+ <div class="form-group"> 
+    <label for="statesList" class="labels">State:<span style="color: red;">*</span></label><br>
+<select name="statesList" id="statesList" class="form-control" style="padding: 0px 0px;">
+<option value="" selected>Select your state</option>
+    <option value="AL">Alabama</option>
+    <option value="AK">Alaska</option>
+	<option value="AZ">Arizona</option>
+	<option value="AR">Arkansas</option>
+	<option value="CA">California</option>
+	<option value="CO">Colorado</option>
+	<option value="CT">Connecticut</option>
+	<option value="DE">Delaware</option>
+	<option value="DC">District Of Columbia</option>
+	<option value="FL">Florida</option>
+	<option value="GA">Georgia</option>
+	<option value="HI">Hawaii</option>
+	<option value="ID">Idaho</option>
+	<option value="IL">Illinois</option>
+	<option value="IN">Indiana</option>
+	<option value="IA">Iowa</option>
+	<option value="KS">Kansas</option>
+	<option value="KY">Kentucky</option>
+	<option value="LA">Louisiana</option>
+	<option value="ME">Maine</option>
+	<option value="MD">Maryland</option>
+	<option value="MA">Massachusetts</option>
+	<option value="MI">Michigan</option>
+	<option value="MN">Minnesota</option>
+	<option value="MS">Mississippi</option>
+	<option value="MO">Missouri</option>
+	<option value="MT">Montana</option>
+	<option value="NE">Nebraska</option>
+	<option value="NV">Nevada</option>
+	<option value="NH">New Hampshire</option>
+	<option value="NJ">New Jersey</option>
+	<option value="NM">New Mexico</option>
+	<option value="NY">New York</option>
+	<option value="NC">North Carolina</option>
+	<option value="ND">North Dakota</option>
+	<option value="OH">Ohio</option>
+	<option value="OK">Oklahoma</option>
+	<option value="OR">Oregon</option>
+	<option value="PA">Pennsylvania</option>
+	<option value="RI">Rhode Island</option>
+	<option value="SC">South Carolina</option>
+	<option value="SD">South Dakota</option>
+	<option value="TN">Tennessee</option>
+	<option value="TX">Texas</option>
+	<option value="UT">Utah</option>
+	<option value="VT">Vermont</option>
+	<option value="VA">Virginia</option>
+	<option value="WA">Washington</option>
+	<option value="WV">West Virginia</option>
+	<option value="WI">Wisconsin</option>
+	<option value="WY">Wyoming</option>
+</select>
+</div>  
+</div>
+<div class="col-xs-12 col-sm-12 col-md-2">
+<div class="form-group"> 
+  <label for="degree" class="labels"> Degree:<span style="color: red;">*</span></label><br>
+<input type="radio" name="degreetemp" id="fah" value="fa" checked><span style="color: white;">Fahrenheit</span> &nbsp;
+<input type="radio" name="degreetemp" id="cel" value="cs"><span style="color: white;">Celsius</span>  
+</div>
+</div>
+<div class="col-md-3 col-sm-12 col-md-push-1" style="float:right;">
+<div class="form-group">
+  <br>
+  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Search</button>
+  <button type="button" id="clear" class="btn btn-default"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>Clear</button>
+</div>
+</div>
+
+</div>
+<div class="row">
+<div class="col-md-3 col-sm-12 col-md-push-1" style="float:right;">
+<div class="form-group">
+  <br>
+  <label for="cc" class="labels">Powered By:</label>
+  <a href="http://forecast.io" style="background-color:transparent;" target="_blank"><img src="http://cs-server.usc.edu:45678/hw/hw8/images/forecast_logo.png" width="73px" height="32px"></a>
+</div>
+</div>
+</div>
+</form><br>
+<div style="border-bottom: 1px solid white;">
+</div>
+<br>
+<div class="row" style="display:none;" id="result">
+<div class="col-xs-12 col-sm-12">
+<div id="tabHeaders">
+<ul class="nav nav-tabs" role="tablist">
+    
+    <li role="presentation" class="active" id="rN"><a href="#rightNow" aria-controls="rightNow" role="tab" data-toggle="tab"><b>Right Now</b></a></li>
+    <li role="presentation" id="n24"><a href="#next24" aria-controls="next24" role="tab" data-toggle="tab"><b>Next 24 hours</b></a></li>
+    <li role="presentation" id="n7"><a href="#next7" aria-controls="next7" role="tab" data-toggle="tab"><b>Next 7 days</b></a></li>
+    
+</ul>
+</div>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="rightNow" >
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="row">
+    <div class="col-md-6 special" style="background-color:#F08080;" height="168px">
+    <img id="weatherImage" style="display:block; margin-left:auto; margin-right:auto;">    
+    </div>
+    <div class="col-md-6 lucky" style="background-color:#F08080;">
+    <div id="weather" style="text-align:center; color:white; font-weight:bold;"></div>
+    <div id="temp" style="text-align:center;color:white; font-size:60px; padding-top:15px; font-weight:bold;"></div>
+    <div id="minmax" style="text-align:center; padding-top:21px;">
+    <label id="mini" style="color:blue;"></label>|<label id="maxi" style="color:green;"></label><img id="fb" src="http://cs-server.usc.edu:45678/hw/hw8/images/fb_icon.png" style="float:right;"></div>
+    </div>
+    
+    <table class="table table-striped">
+    <tr>
+    <td>Precipitation</td>    
+    <td id="precip"></td>
+    </tr>
+    <tr>
+    <td>Chance of Rain</td>  
+    <td id="chance"></td>
+    </tr>
+    <tr>
+    <td>Wind Speed</td>  
+    <td id="wSpeed"></td>
+    </tr>
+    <tr>
+    <td>Dew Point</td>  
+    <td id="dewPt"></td>
+    </tr>
+    <tr>
+    <td>Humidity</td>  
+    <td id="humid"></td>
+    </tr>
+     <tr>
+    <td>Visibility</td>  
+    <td id="visible"></td>
+    </tr>
+     <tr>
+    <td>Sunrise</td>  
+    <td id="sunrise"></td>
+    </tr>
+     <tr>
+    <td>Sunset</td>  
+    <td id="sunset"></td>
+    </tr>
+    </table>
+   
+    </div>
+     
+    </div>    
+    <div class="col-xs-12 col-sm-12 col-md-6 extraStyle">
+    <div id="basicMap" style="width:100%; border:1px solid white; padding-left:0px; padding-right:0px;">
+    </div>
+    </div>    
+   
+    </div>
+    <div role="tabpanel" class="tab-pane" id="next24">
+    <div class="col-md-12" style="background-color:white; padding-left:0px; padding-right:0px;">
+    <table id="secondTab" class="table" style="width:100%; text-align:center; table-layout:fixed;">
+    <tr style="background-color: #337ab7; color:white;">
+    <th>Time</th>
+    <th>Summary</th>
+    <th>Cloud Cover</th>
+    <th>Temp<span id="tempe"></span></th>
+    <th>View Details</th>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T0"></td>
+    <td><img id="weatherImage0" style="height:50px;width:50px;"></td>    
+    <td id="cloud0"></td>
+    <td id="nextTemp0"></td>
+    <td><a data-toggle="collapse" id="gif0" href="#moreDetails" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+    <div class="collapse" id="moreDetails" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy0"></td>
+    <td id="hum0"></td>
+    <td id="vi0"></td>
+    <td id="pres0"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div></td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T1"></td>
+    <td><img id="weatherImage1" style="height:50px; width:50px;"></td>    
+    <td id="cloud1"></td>
+    <td id="nextTemp1"></td>
+    <td><a data-toggle="collapse" href="#moreDetails1" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr> 
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+    <div class="collapse" id="moreDetails1" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy1"></td>
+    <td id="hum1"></td>
+    <td id="vi1"></td>
+    <td id="pres1"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div></td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T2"></td>
+    <td><img id="weatherImage2" style="height:50px; width:50px;"></td>    
+    <td id="cloud2"></td>
+    <td id="nextTemp2"></td>
+    <td><a data-toggle="collapse" href="#moreDetails2" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+    <div class="collapse" id="moreDetails2" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy2"></td>
+    <td id="hum2"></td>
+    <td id="vi2"></td>
+    <td id="pres2"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+    </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T3"></td>
+    <td><img id="weatherImage3" style="height:50px; width:50px;"></td>    
+    <td id="cloud3"></td>
+    <td id="nextTemp3"></td>
+    <td><a data-toggle="collapse" href="#moreDetails3" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+    <div class="collapse" id="moreDetails3" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy3"></td>
+    <td id="hum3"></td>
+    <td id="vi3"></td>
+    <td id="pres3"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+    </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T4"></td>
+    <td><img id="weatherImage4" style="height:50px; width:50px;"></td>    
+    <td id="cloud4"></td>
+    <td id="nextTemp4"></td>
+    <td><a data-toggle="collapse" href="#moreDetails4" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails4" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy4"></td>
+    <td id="hum4"></td>
+    <td id="vi4"></td>
+    <td id="pres4"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T5"></td>
+    <td><img id="weatherImage5" style="height:50px; width:50px;"></td>    
+    <td id="cloud5"></td>
+    <td id="nextTemp5"></td>
+    <td><a data-toggle="collapse" href="#moreDetails5" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails5" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy5"></td>
+    <td id="hum5"></td>
+    <td id="vi5"></td>
+    <td id="pres5"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T6"></td>
+    <td><img id="weatherImage6" style="height:50px; width:50px;"></td>    
+    <td id="cloud6"></td>
+    <td id="nextTemp6"></td>
+    <td><a data-toggle="collapse" href="#moreDetails6" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails6" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy6"></td>
+    <td id="hum6"></td>
+    <td id="vi6"></td>
+    <td id="pres6"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T7"></td>
+    <td><img id="weatherImage7" style="height:50px; width:50px;"></td>    
+    <td id="cloud7"></td>
+    <td id="nextTemp7"></td>
+    <td><a data-toggle="collapse" href="#moreDetails7" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails7" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy7"></td>
+    <td id="hum7"></td>
+    <td id="vi7"></td>
+    <td id="pres7"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T8"></td>
+    <td><img id="weatherImage8" style="height:50px; width:50px;"></td>    
+    <td id="cloud8"></td>
+    <td id="nextTemp8"></td>
+    <td><a data-toggle="collapse" href="#moreDetails8" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails8" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy8"></td>
+    <td id="hum8"></td>
+    <td id="vi8"></td>
+    <td id="pres8"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T9"></td>
+    <td><img id="weatherImage9" style="height:50px; width:50px;"></td>    
+    <td id="cloud9"></td>
+    <td id="nextTemp9"></td>
+    <td><a data-toggle="collapse" href="#moreDetails9" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails9" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy9"></td>
+    <td id="hum9"></td>
+    <td id="vi9"></td>
+    <td id="pres9"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T10"></td>
+    <td><img id="weatherImage10" style="height:50px; width:50px;"></td>    
+    <td id="cloud10"></td>
+    <td id="nextTemp10"></td>
+    <td><a data-toggle="collapse" href="#moreDetails10" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails10" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy10"></td>
+    <td id="hum10"></td>
+    <td id="vi10"></td>
+    <td id="pres10"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T11"></td>
+    <td><img id="weatherImage11" style="height:50px; width:50px;"></td>    
+    <td id="cloud11"></td>
+    <td id="nextTemp11"></td>
+    <td><a data-toggle="collapse" href="#moreDetails11" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails11" aria-expanded="false">
+    <div class="well">
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy11"></td>
+    <td id="hum11"></td>
+    <td id="vi11"></td>
+    <td id="pres11"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T12"></td>
+    <td><img id="weatherImage12" style="height:50px; width:50px;"></td>    
+    <td id="cloud12"></td>
+    <td id="nextTemp12"></td>
+    <td><a data-toggle="collapse" href="#moreDetails12" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails12" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy12"></td>
+    <td id="hum12"></td>
+    <td id="vi12"></td>
+    <td id="pres12"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T13"></td>
+    <td><img id="weatherImage13" style="height:50px; width:50px;"></td>    
+    <td id="cloud13"></td>
+    <td id="nextTemp13"></td>
+    <td><a data-toggle="collapse" href="#moreDetails13" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails13" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy13"></td>
+    <td id="hum13"></td>
+    <td id="vi13"></td>
+    <td id="pres13"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    <tr style="background-color:white;">
+    <td id="T14"></td>
+    <td><img id="weatherImage14" style="height:50px; width:50px;"></td>    
+    <td id="cloud14"></td>
+    <td id="nextTemp14"></td>
+    <td><a data-toggle="collapse" href="#moreDetails14" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails14" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy14"></td>
+    <td id="hum14"></td>
+    <td id="vi14"></td>
+    <td id="pres14"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T15"></td>
+    <td><img id="weatherImage15" style="height:50px; width:50px;"></td>    
+    <td id="cloud15"></td>
+    <td id="nextTemp15"></td>
+    <td><a data-toggle="collapse" href="#moreDetails15" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails15" aria-expanded="false">
+    <div class="well">
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy15"></td>
+    <td id="hum15"></td>
+    <td id="vi15"></td>
+    <td id="pres15"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T16"></td>
+    <td><img id="weatherImage16" style="height:50px; width:50px;"></td>    
+    <td id="cloud16"></td>
+    <td id="nextTemp16"></td>
+    <td><a data-toggle="collapse" href="#moreDetails16" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails16" aria-expanded="false">
+    <div class="well">
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy16"></td>
+    <td id="hum16"></td>
+    <td id="vi16"></td>
+    <td id="pres16"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T17"></td>
+    <td><img id="weatherImage17" style="height:50px; width:50px;"></td>    
+    <td id="cloud17"></td>
+    <td id="nextTemp17"></td>
+    <td><a data-toggle="collapse" href="#moreDetails17" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails17" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy17"></td>
+    <td id="hum17"></td>
+    <td id="vi17"></td>
+    <td id="pres17"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T18"></td>
+    <td><img id="weatherImage18" style="height:50px; width:50px;"></td>    
+    <td id="cloud18"></td>
+    <td id="nextTemp18"></td>
+    <td><a data-toggle="collapse" href="#moreDetails18" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails18" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy18"></td>
+    <td id="hum18"></td>
+    <td id="vi18"></td>
+    <td id="pres18"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T19"></td>
+    <td><img id="weatherImage19" style="height:50px; width:50px;"></td>    
+    <td id="cloud19"></td>
+    <td id="nextTemp19"></td>
+    <td><a data-toggle="collapse" href="#moreDetails19" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails19" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy19"></td>
+    <td id="hum19"></td>
+    <td id="vi19"></td>
+    <td id="pres19"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T20"></td>
+    <td><img id="weatherImage20" style="height:50px; width:50px;"></td>    
+    <td id="cloud20"></td>
+    <td id="nextTemp20"></td>
+    <td><a data-toggle="collapse" href="#moreDetails20" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails20" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy20"></td>
+    <td id="hum20"></td>
+    <td id="vi20"></td>
+    <td id="pres20"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T21"></td>
+    <td><img id="weatherImage21" style="height:50px; width:50px;"></td>    
+    <td id="cloud21"></td>
+    <td id="nextTemp21"></td>
+    <td><a data-toggle="collapse" href="#moreDetails21" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails21" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy21"></td>
+    <td id="hum21"></td>
+    <td id="vi21"></td>
+    <td id="pres21"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T22"></td>
+    <td><img id="weatherImage22" style="height:50px; width:50px;"></td>    
+    <td id="cloud22"></td>
+    <td id="nextTemp22"></td>
+    <td><a data-toggle="collapse" href="#moreDetails22" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails22" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy22"></td>
+    <td id="hum22"></td>
+    <td id="vi22"></td>
+    <td id="pres22"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+     <tr style="background-color:white;">
+    <td id="T23"></td>
+    <td><img id="weatherImage23" style="height:50px; width:50px;"></td>    
+    <td id="cloud23"></td>
+    <td id="nextTemp23"></td>
+    <td><a data-toggle="collapse" href="#moreDetails23" style="color:#337AB7;">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> </a></span>
+    </td>
+    </tr>
+    <tr style="background-color: #F5F5F5 ! important;"><td class="hiddenRow" colspan="5" style="padding:0px;">
+     <div class="collapse" id="moreDetails23" aria-expanded="false">
+    <div class="well"> 
+    <div class="table-responsive">
+    <table class="table innerT" style="width:100%; text-align:center;">
+    <tr style="background-color:white;">
+    <th style="text-align:center;">Wind</th>    
+    <th style="text-align:center;">Humidity</th>
+    <th style="text-align:center;">Visibility</th>
+    <th style="text-align:center;">Pressure</th>
+    </tr>    
+    <tr style="background-color:#F5F5F5">
+    <td id="windy23"></td>
+    <td id="hum23"></td>
+    <td id="vi23"></td>
+    <td id="pres23"></td>
+    </tr> 
+    </table>
+    </div>
+    </div> 
+    </div>
+        </td>
+    </tr>
+    </table>
+    </div>
+    </div>
+    
+    
+     <div role="tabpanel" class="tab-pane" id="next7">
+     <div class="inner" id="trap" style="text-align:center; color:white; font-weight:bold;">
+     <div class="row" id="outerRow">
+     <div class="col-sm-12 col-xs-12 col-md-1 test">
+     <div class="trial" style="display:inline-block;background-color:#337AB7;">
+     <table style="text-align:center; margin-right:auto; margin-left:auto;" id="first">
+      <tr class="rows"><td id="day1" class="day1"></td></tr>
+     <tr class="rows"><td id="date1" class="date1"></td></tr>
+    <tr class="rows"><td><img id="pic1" height="60px" width="60px"></td></tr>
+         <tr class="rows"><td>Min</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="mintemp1" style="font-size:26px;"></td></tr>
+        <tr class="rows"><td>Max</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="maxtemp1" style="font-size:26px;"></td></tr>
+         </table>
+         </div> 
+     </div>
+      <div class="col-sm-12 col-xs-12 col-md-1 test">
+     <div id="s2" class="trial" style="display:inline-block; background-color:#EC4444;">
+       <table style="text-align:center; margin-right:auto; margin-left:auto;" id="second">
+      <tr class="rows"><td id="day2"></td></tr>
+     <tr class="rows"><td id="date2"></td></tr>
+    <tr class="rows"><td><img id="pic2" height="60px" width="60px"></td></tr>
+         <tr class="rows"><td>Min</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="mintemp2" style="font-size:26px;"></td></tr>
+        <tr class="rows"><td>Max</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="maxtemp2" style="font-size:26px;"></td></tr>
+         </table>
+          
+          
+    </div> 
+         </div>
+     <div class="col-sm-12 col-xs-12 col-md-1 test">
+     <div class="trial" style="display:inline-block; background-color:#E58D4E; ">
+       <table style="text-align:center; margin-right:auto; margin-left:auto;" id="third">
+      <tr class="rows"><td id="day3"></td></tr>
+     <tr class="rows"><td id="date3"></td></tr>
+    <tr class="rows"><td><img id="pic3" height="60px" width="60px"></td></tr>
+         <tr class="rows"><td>Min</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="mintemp3" style="font-size:26px;"></td></tr>
+        <tr class="rows"><td>Max</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="maxtemp3" style="font-size:26px;"></td></tr>
+         </table>   
+         </div>
+         </div>
+     <div class="col-sm-12 col-xs-12 col-md-1 test">
+     <div class="trial" style="display:inline-block; background-color:#A7A439;">
+      <table style="text-align:center; margin-right:auto; margin-left:auto;" id="fourth">
+      <tr class="rows"><td id="day4"></td></tr>
+     <tr class="rows"><td id="date4"></td></tr>
+    <tr class="rows"><td><img id="pic4" height="60px" width="60px"></td></tr>
+         <tr class="rows"><td>Min</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="mintemp4" style="font-size:26px;"></td></tr>
+        <tr class="rows"><td>Max</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="maxtemp4" style="font-size:26px;"></td></tr>
+         </table>
+         </div>
+         </div>
+         <div class="col-sm-12 col-xs-12 col-md-1 test">
+     <div class="trial" style="display:inline-block; background-color:#9770A7;">
+       <table style="text-align:center; margin-right:auto; margin-left:auto;" id="fifth">
+      <tr class="rows"><td id="day5"></td></tr>
+     <tr class="rows"><td id="date5"></td></tr>
+    <tr class="rows"><td><img id="pic5" height="60px" width="60px"></td></tr>
+         <tr class="rows"><td>Min</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="mintemp5" style="font-size:26px;"></td></tr>
+        <tr class="rows"><td>Max</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="maxtemp5" style="font-size:26px;"></td></tr>
+         </table>       
+         </div>
+         </div>
+         <div class="col-sm-12 col-xs-12 col-md-1 test">
+    <div class="trial"  style="display:inline-block; background-color:#F37C7E;">
+     <table style="text-align:center; margin-right:auto; margin-left:auto;" id="sixth">
+      <tr class="rows"><td id="day6"></td></tr>
+     <tr class="rows"><td id="date6"></td></tr>
+    <tr class="rows"><td><img id="pic6" height="60px" width="60px"></td></tr>
+         <tr class="rows"><td>Min</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="mintemp6" style="font-size:26px;"></td></tr>
+        <tr class="rows"><td>Max</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="maxtemp6" style="font-size:26px;"></td></tr>
+         </table>      
+        </div>  
+         </div>
+          <div class="col-sm-12 col-xs-12 col-md-1 test">
+     <div class="trial" style="display:inline-block; background-color:#CE4571;">
+     <table style="text-align:center; margin-right:auto; margin-left:auto;" id="seven">
+      <tr class="rows"><td id="day7"></td></tr>
+     <tr class="rows"><td id="date7"></td></tr>
+    <tr class="rows"><td><img id="pic7" height="60px" width="60px"></td></tr>
+         <tr class="rows"><td>Min</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="mintemp7" style="font-size:26px;"></td></tr>
+        <tr class="rows"><td>Max</td></tr> 
+         <tr class="rows"><td>Temp</td></tr>
+          <tr class="rows"> <td id="maxtemp7" style="font-size:26px;"></td></tr>
+         </table>       
+       </div>
+         </div>
+    <div style="clear: both"></div>
+    </div>
+    </div>
+    
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   <!--Modal--> 
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="font-size:medium;"> 
+        <label id="headingModal"></label>
+        </div>
+        <div class="modal-body" style="text-align:center; style=font-size:medium;">
+        <img id="imageIcon" style="display:block; margin-left:auto; margin-right:auto;" height="120px" width="120px"><br>
+        <label id="summaryName" style="font-size:20px;"></label>&nbsp;<label id="summarySpan" style="color:orange;font-size:20px;"></label>
+        <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-4">
+        <label><b>Sunrise Time</b></label><br>
+        <label id="sunriseT" style="font-weight:normal;">7:00 am</label>
+        </div>    
+         <div class="col-sm-12 col-xs-12 col-md-4">
+        <label><b>Sunset Time</b></label><br>
+        <label id="sunsetT" style="font-weight:normal;">6:18 pm</label>
+        </div>  
+          <div class="col-sm-12 col-xs-12 col-md-4">
+        <label><b>Humidity</b></label><br>
+        <label id="humidT" style="font-weight:normal;"></label>
+        </div>     
+        </div>
+        <div class="row">
+        <div class="col-sm-12 col-xs-12 col-md-4">
+        <label><b>Wind Speed</b></label><br>
+        <label id="ws" style="font-weight:normal;"></label>
+        </div>    
+         <div class="col-sm-12 col-xs-12 col-md-4">
+        <label><b>Visibility</b></label><br>
+        <label id="visibleT" style="font-weight:normal;"></label>
+        </div>  
+          <div class="col-sm-12 col-xs-12 col-md-4">
+        <label><b>Pressure</b></label><br>
+        <label id="pressureT" style="font-weight:normal;"></label>
+        </div>     
+        </div>
+      </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      </div>
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</body>
+</html>

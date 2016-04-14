@@ -1,0 +1,301 @@
+
+
+body {
+background:url(http://cs-server.usc.edu:45678/hw/hw8/images/bg.jpg);
+background-repeat: no-repeat;
+background-position: center center;
+background-attachment: fixed;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+min-height: 100%;
+min-width:100%;
+}
+
+.labels{
+    
+ color: floralwhite;   
+    
+}
+
+#streetAddr-error{
+    color: red !important;
+}
+
+#city-error{
+    color: red !important;
+}
+
+#statesList-error{
+    color: red !important;
+}
+
+.nav-tabs{
+ 
+    border-bottom: none !important;
+    
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    
+ color: white;
+background-color : #337ab7;
+    
+}
+
+.nav-tabs > li > a , .nav-tabs > .active > a, .nav-tabs > .active > a:focus, .nav-tabs > .active > a:hover {
+ 
+    border-bottom: none;
+    
+}
+
+.nav-tabs li a {
+ 
+    border: none;
+    
+}
+
+a{
+ 
+    color: #337ab7;
+    background-color: white;
+    
+}
+
+.tab-content > .active{
+    
+ display: block;   
+    
+}
+
+
+
+#trial{
+ 
+    background-color: brown;
+    
+}
+
+
+.table tr:nth-child(odd){
+        background-color: beige;   
+}
+
+.table tr:nth-child(even){
+        background-color: #FFE4E1;   
+}
+
+
+
+#secondTab th{
+ text-align: center;   
+    
+}
+
+
+.hiddenRow{
+ 
+    padding : 0 !important;
+}
+
+.well{
+ 
+    border:none !important;
+    margin-bottom: none !important;
+}
+
+table.innerT th{
+ 
+    text-align: center;
+    
+}
+
+
+
+@media (min-width:922px){
+    
+    #trap{
+    
+    background-color: black;
+    
+    }  
+    
+    #outerRow{
+        
+     padding-top: 1%;
+     padding-bottom: 1%;
+    margin-left: 20%;
+    
+        
+    }
+    
+   div.trial{
+   float: left;
+   width:80px;
+    border-radius:5px;
+}
+    div.test{
+        
+        margin:0px 7px;
+        font-size: small;
+    }
+    
+    #basicMap{
+     
+        height: 476px;
+        
+        
+        
+    }
+ 
+    #fb{
+ 
+    height:25%;
+    width:15%;
+    padding-bottom: 7px;
+}
+    #weatherImage{
+    
+    height: 90%;
+    width:70%;
+    padding-top:3%;
+    
+    }
+    
+    .col-md-6 {
+        
+     height: 180px !important;
+    }
+    
+    div.col-xs-12.col-sm-12.col-md-6.extraStyle{
+     
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+    
+    
+}
+@media (max-width:768px) {
+    
+ div.trial {
+  
+    width:100%;
+    border-radius:40px;
+     
+ }
+    
+    #trap{
+    
+    background-color: transparent;
+    
+    }
+    
+ #outerRow{
+  
+     padding-top: 1%;
+     padding-bottom: 1%;
+    
+ }
+    
+#basicMap{
+ 
+   
+    margin-left: 5px;
+    margin-right: 5px;
+    height:300px;
+    
+}
+    
+    
+#fb{
+ 
+    height:40px;
+    width:40px;
+    margin-top: -20px;
+    
+}
+    
+#weatherImage{
+ 
+    height: 60%;
+    width: 30%;
+    padding-top: 5%;
+    
+    
+}
+    
+
+    
+    
+    
+}
+
+@media(min-width:768px){
+
+
+    #weatherImage{
+    
+        padding-top:3%;
+    
+    }
+
+
+
+}
+
+
+#first td{
+ 
+    padding-bottom: 5px;
+    cursor: pointer;
+    
+    
+}
+
+#second td{
+ padding-bottom: 5px;
+cursor: pointer;
+}
+
+#third td{
+ padding-bottom: 5px;
+cursor: pointer;
+}
+
+#fourth td{
+ padding-bottom: 5px;
+cursor: pointer;
+}
+
+#fifth td{
+ padding-bottom: 5px;
+    cursor: pointer;
+}
+
+#sixth td{
+ padding-bottom: 5px;
+    cursor: pointer;
+}
+
+#seven td{
+ padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.map img{
+    
+ max-width: none;
+}
+
+ .olImageLoadError { 
+    
+    display: none !important;
+}
+
+
+#secondTab td{
+ 
+ vertical-align: middle !important;
+    
+}
